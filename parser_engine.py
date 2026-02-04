@@ -5,3 +5,83 @@ from lark import Lark, Transformer
 query_keywords = Word("Where", "Population", "Wage","State","Area","Rank")
 operator = Literal("<") | Literal(">") | Literal("<=") | Literal("=>")|Literal("AND")|Literal("OR")|Literal("HELP")
 expression = query_keywords + operator + query_keywords
+
+
+def main():
+    print("$$")
+    getHelp()
+
+def doQuery (column, city="none", operand="none", quantity=0):
+    if city != "none":
+        if column == "population":
+            doCityPopulationQuery(city)
+        elif column == "where":
+            doCityWhereQuery(city)
+        elif column == "state":
+            doCityStateQuery(city)
+        elif column == "area":
+            doCityAreaQuery(city)
+        elif column == "rank":
+            doCityRankQuery(city)
+        elif column == "big":
+            doCityBigQuery(city)
+    elif quantity != 0:
+        if column == "population":
+            doNumPopulationQuery(operand, quantity)
+        elif column == "wage":
+            doNumWageQuery(operand, quantity)
+        elif column == "area":
+            doNumAreaQuery(operand, quantity)
+        elif column == "rank":
+            doNumRankQuery(operand, quantity)
+    elif column == "help":
+        getHelp()
+    else:
+        print("Invalid Query Message")
+
+def doCityPopulationQuery(city):
+    return city
+
+def doCityWhereQuery(city):
+    return city
+
+def doCityStateQuery(city):
+    return city
+
+def doCityAreaQuery(city):
+    return city
+
+def doCityRankQuery(city):
+    return city
+
+def doCityBigQuery(city):
+    return city
+
+def doNumPopulationQuery(operand, quantity):
+    return quantity
+
+def doNumWageQuery(operand, quantity):
+    return quantity
+
+def doNumAreaQuery(operand, quantity):
+    return quantity
+
+def doNumRankQuery(operand, quantity):
+    return quantity
+
+def getHelp():
+    print("City Commands\n"
+            "\tWHERE “City”: returns the state the chosen city is in\n"
+            "\tPOPULATION “City”: returns the population of the chosen city\n"
+            "\tSTATE “State”: returns a list of all the cities in the chosen state\n"
+            "\tAREA “City”: returns the area of the chosen city\n"
+            "\tRANK “City”: returns the rank of the chosen city\n"
+            "\tBIG “City”: returns if the chosen city is big\n"
+        "Number Commands: <, <=, =, >=, >\n"
+            "\tPOPULATION >, <, = #: returns cities with a population >,<,= the given number\n"
+            "\tWAGE >, <, = #: returns cities with a living wage >,<,= the given number\n"
+            "\tAREA >, <, = #: returns cities with an area >,<,= the given number\n"
+            "\tRANK >, <, = #: returns cities with a rank >,<,= the given number\n"
+            )
+
+main()
