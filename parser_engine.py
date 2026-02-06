@@ -5,28 +5,28 @@ def main():
 
 def doQuery (column, city="none", operand="none", quantity=0): 
     if city != "none":
-        if column == "population":
+        if column == "POPULATION":
             doCityPopulationQuery(city)
-        elif column == "where":
+        elif column == "WHERE":
             doCityWhereQuery(city)
-        elif column == "state":
+        elif column == "STATE":
             doCityStateQuery(city)
-        elif column == "area":
+        elif column == "AREA":
             doCityAreaQuery(city)
-        elif column == "rank":
+        elif column == "RANK":
             doCityRankQuery(city)
-        elif column == "big":
+        elif column == "BIG":
             doCityBigQuery(city)
     elif quantity != 0:
-        if column == "population":
+        if column == "POPULATION":
             doNumPopulationQuery(operand, quantity)
-        elif column == "wage":
+        elif column == "WAGE":
             doNumWageQuery(operand, quantity)
-        elif column == "area":
+        elif column == "AREA":
             doNumAreaQuery(operand, quantity)
-        elif column == "rank":
+        elif column == "RANK":
             doNumRankQuery(operand, quantity)
-    elif column == "help":
+    elif column == "HELP":
         getHelp()
     else:
         print("Invalid Query Message")
