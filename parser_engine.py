@@ -1,9 +1,28 @@
+import pyparsing as pp
+from pyparsing import Word, Literal, Combine, Group, Optional
+from lark import Lark, Transformer
+
+
+
+
+query_keywords = pp.oneOf("POPULATION WHERE WAGE STATE AREA RANK")
+operators = pp.oneOf("< > <= =>")
+#operator = Literal("<") | Literal(">") | Literal("<=") | Literal("=>")|Literal("AND")|Literal("OR")|Literal("HELP")
+and_function = pp.Literal("AND")
+or_function = pp.Literal("OR")
+help_function = pp.Literal("HELP")
+
+expression = query_keywords + operators  + query_keywords
+print (expression)
+
+
+
 
 def main():
     print("$$")
     getHelp()
 
-def doQuery (column, city="none", operand="none", quantity=0): 
+def doQuery (column, city="none", operand="none", quantity=0):
     if city != "none":
         if column == "POPULATION":
             doCityPopulationQuery(city)
@@ -75,5 +94,17 @@ def getHelp():
             "\tAREA >, <, = #: returns cities with an area >,<,= the given number\n"
             "\tRANK >, <, = #: returns cities with a rank >,<,= the given number\n"
             )
+while True:
+    user_input = input("Please choose your command between WHERE, POPULATION, STATE, AREA, RANK, BIG, NUMBER,HELP: ")
+    column = user_input.split()[0]
+    if len(user_input) == 2:
+        city = user_input.split()[1]
+        doQuery(column, city)
+    elif len(user_input) == 3:
+        city = "none"
+        operator = user_input.split()[1]
+        num = int(user_input.split()[2])
+        doQuery(column, city,operator, num)
+
 
 main()
