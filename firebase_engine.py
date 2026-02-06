@@ -4,8 +4,8 @@ from firebase_admin import firestore
 
 # Use a service account.
 # Laylas path: /Users/laylamusallam/Downloads/CS3050/warmup-project-ea50f-firebase-adminsdk-fbsvc-29b43b0a28
-
-cred = credentials.Certificate('path.json')
+# Varuns path: C:/Users/varun/CS_3050/warmup-project-ea50f-firebase-adminsdk-fbsvc-81f9c5d810.json
+cred = credentials.Certificate("C:/Users/varun/CS_3050/warmup-project-ea50f-firebase-adminsdk-fbsvc-81f9c5d810.json")
 app = firebase_admin.initialize_app(cred)
 db = firestore.client()
 
@@ -24,19 +24,20 @@ class City:
     def to_dict(self):
         
 
-    def __repr__(self):
-        return f"City(\
-                name={self.name}, \
-                state={self.state}, \
-                rank={self.rank},\
-                population={self.population}, \
-                living_wage={self.living_wage}, \
-                area={self.area},\
-                density={self.density},\
-                big_city={self.big_city},\
-            )"
+        def __repr__(self):
+            return f"City(\
+                    name={self.name}, \
+                    state={self.state}, \
+                    rank={self.rank},\
+                    population={self.population}, \
+                    living_wage={self.living_wage}, \
+                    area={self.area},\
+                    density={self.density},\
+                    big_city={self.big_city},\
+                )"
     
 docs = db.collection("cities").stream()
 
 for doc in docs:
     print(f"{doc.id} => {doc.to_dict()}")
+
