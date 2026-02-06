@@ -1,11 +1,12 @@
 import pyparsing as pp
+import firebase_engine
 from pyparsing import Word, Literal, Combine, Group, Optional
 from lark import Lark, Transformer
 
 
 
 
-query_keywords = pp.oneOf("POPULATION WHERE WAGE STATE AREA RANK")
+query_keywords = pp.oneOf("POPULATION WHERE WAGE STATE AREA RANK BIG")
 operators = pp.oneOf("< > <= =>")
 #operator = Literal("<") | Literal(">") | Literal("<=") | Literal("=>")|Literal("AND")|Literal("OR")|Literal("HELP")
 and_function = pp.Literal("AND")
@@ -99,12 +100,12 @@ while True:
     column = user_input.split()[0]
     if len(user_input) == 2:
         city = user_input.split()[1]
-        doQuery(column, city)
+        operator="none", quantity=0
     elif len(user_input) == 3:
         city = "none"
         operator = user_input.split()[1]
         num = int(user_input.split()[2])
-        doQuery(column, city,operator, num)
+    doQuery(column, city,operator, num)
 
 
 main()
