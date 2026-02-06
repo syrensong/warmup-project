@@ -7,5 +7,11 @@ cred = credentials.Certificate('/Users/laylamusallam/Downloads/CS3050/warmup-pro
 app = firebase_admin.initialize_app(cred)
 db = firestore.client()
 
-cities = db.child("Cities").get()
-print(cities.val())
+db = firestore.client()
+
+# Query Firestore collection (not Realtime Database)
+cities_ref = db.collection('Cities')
+cities = cities_ref.stream()
+
+for city in cities:
+    print(f'{city.id} => {city.to_dict()}')
