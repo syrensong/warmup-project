@@ -3,6 +3,7 @@ from firebase_admin import db
 import firebase_engine as fa
 from pyparsing import Word, Literal, Combine, Group, Optional
 from lark import Lark, Transformer
+import firebase_engine
 
 
 
