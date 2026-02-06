@@ -2,9 +2,18 @@ import pyparsing as pp
 from pyparsing import Word, Literal, Combine, Group, Optional
 from lark import Lark, Transformer
 
-query_keywords = Word("Where", "Population", "Wage","State","Area","Rank")
-operator = Literal("<") | Literal(">") | Literal("<=") | Literal("=>")|Literal("AND")|Literal("OR")|Literal("HELP")
-expression = query_keywords + operator + query_keywords
+
+
+
+query_keywords = pp.oneOf("POPULATION WHERE WAGE STATE AREA RANK")
+operators = pp.oneOf("< > <= =>")
+#operator = Literal("<") | Literal(">") | Literal("<=") | Literal("=>")|Literal("AND")|Literal("OR")|Literal("HELP")
+and_function = pp.Literal("AND")
+or_function = pp.Literal("OR")
+help_function = pp.Literal("HELP")
+
+expression = query_keywords + operators  + query_keywords
+print (expression)
 
 
 def main():
