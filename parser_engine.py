@@ -16,6 +16,8 @@ expression = query_keywords + operators  + query_keywords
 print (expression)
 
 
+
+
 def main():
     print("$$")
     getHelp()
@@ -92,5 +94,17 @@ def getHelp():
             "\tAREA >, <, = #: returns cities with an area >,<,= the given number\n"
             "\tRANK >, <, = #: returns cities with a rank >,<,= the given number\n"
             )
+while True:
+    user_input = input("Please choose your command between WHERE, POPULATION, STATE, AREA, RANK, BIG, NUMBER,HELP: ")
+    column = user_input.split()[0]
+    if len(user_input) == 2:
+        city = user_input.split()[1]
+        doQuery(column, city)
+    elif len(user_input) == 3:
+        city = "none"
+        operator = user_input.split()[1]
+        num = int(user_input.split()[2])
+        doQuery(column, city,operator, num)
+
 
 main()
