@@ -3,9 +3,15 @@ from firebase_admin import credentials
 from firebase_admin import firestore
 
 # Use a service account.
+<<<<<<< HEAD
 # Laylas path: /Users/laylamusallam/Downloads/CS3050/warmup-project-ea50f-firebase-adminsdk-fbsvc-29b43b0a28
 # Varuns path: C:/Users/varun/CS_3050/warmup-project-ea50f-firebase-adminsdk-fbsvc-81f9c5d810.json
 cred = credentials.Certificate("C:/Users/varun/CS_3050/warmup-project-ea50f-firebase-adminsdk-fbsvc-81f9c5d810.json")
+=======
+# /Users/laylamusallam/Downloads/CS3050/warmup-project-ea50f-firebase-adminsdk-fbsvc-29b43b0a28
+
+cred = credentials.Certificate('path.json')
+>>>>>>> ceea9ee (changed path to json to remove secret)
 app = firebase_admin.initialize_app(cred)
 db = firestore.client()
 
