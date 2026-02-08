@@ -1,5 +1,6 @@
 import pyparsing as pp
-import firebase_engine as fe
+from firebase_admin import db
+import firebase_engine as fa
 from pyparsing import Word, Literal, Combine, Group, Optional
 from lark import Lark, Transformer
 
@@ -16,11 +17,11 @@ help_function = pp.Literal("HELP")
 expression = query_keywords + operators  + query_keywords
 print (expression)
 
-#print(fe.get_city_by_name("Tucson"))
 
 
 def main():
     print("$$")
+    print(fa.get_city_by_name("New York"))
     getHelp()
 
 def doQuery (column, city="none", operand="none", quantity=0):
@@ -106,15 +107,16 @@ doCityPopulationQuery("New York")
 while True:
     user_input = input("Please choose your command between WHERE, POPULATION, STATE, AREA, RANK, BIG, NUMBER,HELP: ")
     column = user_input.split()[0]
+    city = "none"
+    operator = "none"
+    quantity = 0
     if len(user_input) == 2:
         city = user_input.split()[1]
         operator=none, quantity=0
     elif len(user_input) == 3:
-        city = "none"
         operator = user_input.split()[1]
         num = int(user_input.split()[2])
     doQuery(column, city, operator, num)
 
 
-
-#main()
+main()
