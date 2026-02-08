@@ -9,6 +9,19 @@ cred = credentials.Certificate("C:/Users/varun/CS_3050/warmup-project-ea50f-fire
 app = firebase_admin.initialize_app(cred)
 db = firestore.client()
 
+try:
+    # Check if Firebase is already initialized
+    app = firebase_admin.get_app()
+    print("Using existing Firebase app")
+except ValueError:
+    # If not initialized, initialize it
+    cred = credentials.Certificate("C:/Users/varun/CS_3050/warmup-project-ea50f-firebase-adminsdk-fbsvc-81f9c5d810.json")
+    app = firebase_admin.initialize_app(cred)
+    print("Firebase app initialized successfully")
+
+db = firestore.client()
+print("Firestore client created successfully")
+
 class City:
     def __init__(self, name, state, population=0, living_wage=0, area=0, density=0, rank=0, big_city=False):
         self.area = area
@@ -20,21 +33,30 @@ class City:
         self.rank = rank
         self.state = state
 
-    @staticmethod
     def to_dict(self):
+        return {
+            'name': self.name,
+            'state': self.state,
+            'rank': self.rank,
+            'population': self.population,
+            'living_wage': self.living_wage,
+            'area': self.area,
+            'density': self.density,
+            'big_city': self.big_city
+        }
         
 
-        def __repr__(self):
-            return f"City(\
-                    name={self.name}, \
-                    state={self.state}, \
-                    rank={self.rank},\
-                    population={self.population}, \
-                    living_wage={self.living_wage}, \
-                    area={self.area},\
-                    density={self.density},\
-                    big_city={self.big_city},\
-                )"
+    def __repr__(self):
+        return f"City(\
+                name={self.name}, \
+                state={self.state}, \
+                rank={self.rank},\
+                population={self.population}, \
+                living_wage={self.living_wage}, \
+                area={self.area},\
+                density={self.density},\
+                big_city={self.big_city},\
+            )"
     
 docs = db.collection("cities").stream()
 
