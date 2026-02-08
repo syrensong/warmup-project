@@ -65,6 +65,14 @@ def get_city_by_name(city_name):
         return doc.to_dict()
     return None
 
+#get cities by state(state name) returns all cities in state
 
+#get cities by population(operator, value) for example population > 10000 would be get cities by population(>, 10000)
 
-print(get_city_by_name("New York"))
+#get cities by wage(operator, value)
+
+#get cities by area(operator, value)
+
+#get cities by rank(operator, value)
+
+#get all cities()
