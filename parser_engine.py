@@ -52,7 +52,12 @@ def doQuery (column, city="none", operand="none", quantity=0):
         print("Invalid Query Message")
 
 def doCityPopulationQuery(city):
-    return city
+    #return city
+    city_data = fe.get_city_by_name(city)
+    if city_data:
+        print(f"{city} has a population of {city_data['population']}")
+    else:
+        print(f"City '{city}' not found")
 
 def doCityWhereQuery(city):
     return city
@@ -92,15 +97,18 @@ def getHelp():
         "Number Commands: <, <=, =, >=, >\n"
             "\tPOPULATION <=> #: returns cities with a population >,<,= the given number\n"
             "\tWAGE <=> #: returns cities with a living wage >,<,= the given number\n"
-            "\tAREA <=> #: returns cities with an area >,<,= the given number\n"
+            "\tAREA <="> #: returns cities with an area >,<,= the given number\n"
             "\tRANK <=> #: returns cities with a rank >,<,= the given number\n"
             )
+    
+doCityPopulationQuery("New York")
+
 while True:
     user_input = input("Please choose your command between WHERE, POPULATION, STATE, AREA, RANK, BIG, NUMBER,HELP: ")
     column = user_input.split()[0]
     if len(user_input) == 2:
         city = user_input.split()[1]
-        operator="none", quantity=0
+        operator=none, quantity=0
     elif len(user_input) == 3:
         city = "none"
         operator = user_input.split()[1]
