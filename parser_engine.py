@@ -1,5 +1,5 @@
 import pyparsing as pp
-import firebase_engine
+import firebase_engine as fe
 from pyparsing import Word, Literal, Combine, Group, Optional
 from lark import Lark, Transformer
 
@@ -16,7 +16,7 @@ help_function = pp.Literal("HELP")
 expression = query_keywords + operators  + query_keywords
 print (expression)
 
-
+#print(fe.get_city_by_name("Tucson"))
 
 
 def main():
@@ -108,4 +108,5 @@ while True:
     doQuery(column, city, operator, num)
 
 
-main()
+
+#main()

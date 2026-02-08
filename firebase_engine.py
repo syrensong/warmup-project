@@ -12,15 +12,12 @@ db = firestore.client()
 try:
     # Check if Firebase is already initialized
     app = firebase_admin.get_app()
-    print("Using existing Firebase app")
 except ValueError:
     # If not initialized, initialize it
     cred = credentials.Certificate("C:/Users/varun/CS_3050/warmup-project-ea50f-firebase-adminsdk-fbsvc-81f9c5d810.json")
     app = firebase_admin.initialize_app(cred)
-    print("Firebase app initialized successfully")
 
 db = firestore.client()
-print("Firestore client created successfully")
 
 class City:
     def __init__(self, name, state, population=0, living_wage=0, area=0, density=0, rank=0, big_city=False):
@@ -57,9 +54,15 @@ class City:
                 density={self.density},\
                 big_city={self.big_city},\
             )"
-    
-docs = db.collection("cities").stream()
 
+docs = db.collection("cities").stream()
 for doc in docs:
     print(f"{doc.id} => {doc.to_dict()}")
 
+def get_city_by_name(city_name):
+    docs = db.collection("Cities").where("name", "==", city_name).limit(1).stream()
+    for doc in docs:
+        return doc.to_dict()
+    return None
+
+print(get_city_by_name("New York"))
