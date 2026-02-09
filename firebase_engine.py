@@ -108,4 +108,4 @@ def get_all_cities():
     return None
 
 
-print(get_city_by_area(">", 10))
+print(get_city_by_area(">", 1000))

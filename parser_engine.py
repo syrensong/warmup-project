@@ -1,6 +1,6 @@
 import pyparsing as pp
 from firebase_admin import db
-import firebase_engine as fa
+import firebase_engine as fe
 from pyparsing import Word, Literal, Combine, Group, Optional
 from lark import Lark, Transformer
 import firebase_engine
@@ -71,7 +71,8 @@ def doCityAreaQuery(operator, value):
     #return city
     city_data = fe.get_city_by_area(operator, value)
     if city_data:
-        print(f"{city_data['population']}")
+        for data in city_data:
+            print(f"{data['name']}")
     else:
         print(f"City '{city}' not found")
 
@@ -108,7 +109,7 @@ def getHelp():
             "\tRANK <=> #: returns cities with a rank >,<,= the given number\n"
             )
     
-doCityPopulationQuery("New York")
+doCityAreaQuery(">", 100)
 
 while True:
     user_input = input("Please choose your command between WHERE, POPULATION, STATE, AREA, RANK, BIG, NUMBER,HELP: ")
