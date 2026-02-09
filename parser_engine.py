@@ -67,8 +67,13 @@ def doCityWhereQuery(city):
 def doCityStateQuery(city):
     return city
 
-def doCityAreaQuery(city):
-    return city
+def doCityAreaQuery(operator, value):
+    #return city
+    city_data = fe.get_city_by_area(operator, value)
+    if city_data:
+        print(f"{city_data['population']}")
+    else:
+        print(f"City '{city}' not found")
 
 def doCityRankQuery(city):
     return city
