@@ -3,7 +3,6 @@ from firebase_admin import db
 import firebase_engine as fe
 from pyparsing import Word, Literal, Combine, Group, Optional
 from lark import Lark, Transformer
-import firebase_engine
 
 
 
@@ -22,7 +21,7 @@ print (expression)
 
 def main():
     print("$$")
-    print(fa.get_city_by_name("New York"))
+    print(fe.get_city_by_name("New York"))
     getHelp()
 
 def doQuery (column, city="none", operand="none", quantity=0):
