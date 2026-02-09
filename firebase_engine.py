@@ -5,7 +5,7 @@ from firebase_admin import firestore
 # Use a service account.
 # Laylas path: /Users/laylamusallam/Downloads/CS3050/warmup-project-ea50f-firebase-adminsdk-fbsvc-29b43b0a28
 # Varuns path: C:/Users/varun/CS_3050/warmup-project-ea50f-firebase-adminsdk-fbsvc-81f9c5d810.json
-cred = credentials.Certificate("CS_3050/warmup-project-ea50f-firebase-adminsdk-fbsvc-81f9c5d810.json")
+cred = credentials.Certificate("../warmup-project-ea50f-firebase-adminsdk-fbsvc-81f9c5d810.json")
 app = firebase_admin.initialize_app(cred)
 db = firestore.client()
 
