@@ -25,6 +25,21 @@ def main():
     getHelp()
 
 def doQuery (column, city="none", operand="none", quantity=0):
+    if column == "HELP":
+        getHelp()
+        return
+    
+    if quantity != 0:
+        if column == "POPULATION":
+            doNumPopulationQuery(operand, quantity)
+        elif column == "WAGE":
+            doNumWageQuery(operand, quantity)
+        elif column == "AREA":
+            doNumAreaQuery(operand, quantity)
+        elif column == "RANK":
+            doNumRankQuery(operand, quantity)
+        return
+    
     if city != "none":
         if column == "POPULATION":
             doCityPopulationQuery(city)
@@ -38,28 +53,13 @@ def doQuery (column, city="none", operand="none", quantity=0):
             doCityRankQuery(city)
         elif column == "BIG":
             doCityBigQuery(city)
-    elif quantity != 0:
-        if column == "POPULATION":
-            doNumPopulationQuery(operand, quantity)
-        elif column == "WAGE":
-            doNumWageQuery(operand, quantity)
-        elif column == "AREA":
-            doNumAreaQuery(operand, quantity)
-        elif column == "RANK":
-            doNumRankQuery(operand, quantity)
-    elif column == "HELP":
-        getHelp()
-    else:
-        print("Invalid Query Message")
-#THIS ONE WORKS!
-def doCityPopulationQuery(operator, value):
-    #return city
-    city_data = fe.get_city_by_population(operator, value)
-    if city_data:
-        for data in city_data:
-            print(f"{data['name']}")
-    else:
-        print(f"City '{city}' not found")
+        return
+    
+    print("Invalid Query Message")
+
+
+def doCityPopulationQuery(city):
+    return city
 
 def doCityWhereQuery(city):
     return city
@@ -72,14 +72,8 @@ def doCityStateQuery(city):
     else:
         print(f"City '{city}' not found")
 
-def doCityAreaQuery(operator, value):
-    #return city
-    city_data = fe.get_city_by_area(operator, value)
-    if city_data:
-        for data in city_data:
-            print(f"{data['name']}")
-    else:
-        print(f"City '{city}' not found")
+def doCityAreaQuery(city):
+    return city
 
 def doCityRankQuery(city):
     return city
@@ -87,14 +81,28 @@ def doCityRankQuery(city):
 def doCityBigQuery(city):
     return city
 
+#THIS ONE doesn't WORK!
 def doNumPopulationQuery(operand, quantity):
-    return quantity
+    #return city
+    city_data = fe.get_city_by_population(operand, quantity)
+    if city_data:
+        for data in city_data:
+            print(f"{data['name']}")
+    else:
+        print(f"City not found")
 
 def doNumWageQuery(operand, quantity):
     return quantity
 
+#Works
 def doNumAreaQuery(operand, quantity):
-    return quantity
+    #return city
+    city_data = fe.get_city_by_area(operand, quantity)
+    if city_data:
+        for data in city_data:
+            print(f"{data['name']}")
+    else:
+        print(f"City '{city}' not found")
 
 def doNumRankQuery(operand, quantity):
     return quantity
@@ -114,18 +122,18 @@ def getHelp():
             "\tRANK <=> #: returns cities with a rank >,<,= the given number\n"
             )
 
-
 while True:
-    user_input = input("Please choose your command between WHERE, POPULATION, STATE, AREA, RANK, BIG, NUMBER,HELP: ")
-    column = user_input.split()[0]
+    print("Please choose your command between WHERE, POPULATION, STATE, AREA, RANK, BIG, NUMBER,HELP: ")
+    user_input = input().strip()
+    parts = user_input.split()
+    print(parts)
+    column = parts[0].upper()
     city = "none"
     operator = "none"
     quantity = 0
-    if len(user_input) == 2:
-        city = user_input.split()[1]
-    elif len(user_input) == 3:
-        operator = user_input.split()[1]
-        quantity = int(user_input.split()[2])
+    if len(parts) >= 3 and parts[1] in {"<", ">", "<=", ">=", "="}:
+        operator = parts[1]
+        quantity = int(parts[2])
+    elif len(parts) >= 2:
+        city = " ".join(parts[1:])
     doQuery(column, city, operator, quantity)
-
-main()
