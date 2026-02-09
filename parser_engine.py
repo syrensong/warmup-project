@@ -3,6 +3,7 @@ from firebase_admin import db
 import firebase_engine as fe
 from pyparsing import Word, Literal, Combine, Group, Optional
 from lark import Lark, Transformer
+import shlex
 
 
 
@@ -59,7 +60,12 @@ def doQuery (column, city="none", operand="none", quantity=0):
 
 
 def doCityPopulationQuery(city):
-    return city
+    city_data = fe.getCityPopulation(city)
+    
+    if city_data:
+        print(f"The population of {city} is {city_data}")
+    else:
+        print(f"City '{city}' not found")
 
 def doCityWhereQuery(city):
     return city
@@ -128,7 +134,7 @@ def getHelp():
 while True:
     print("Please choose your command between WHERE, POPULATION, STATE, AREA, RANK, BIG, NUMBER,HELP: ")
     user_input = input().strip()
-    parts = user_input.split()
+    parts = shlex.split(user_input)
     print(parts)
     column = parts[0].upper()
     city = "none"
@@ -138,5 +144,5 @@ while True:
         operator = parts[1]
         quantity = int(parts[2])
     elif len(parts) >= 2:
-        city = " ".join(parts[1:])
+        city = parts[1]
     doQuery(column, city, operator, quantity)

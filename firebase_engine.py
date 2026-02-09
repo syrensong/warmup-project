@@ -65,6 +65,16 @@ def get_city_by_name(city_name):
         return doc.to_dict()
     return None
 
+
+#City Queries
+#get population by city name
+def getCityPopulation(city):
+    docs = db.collection("Cities").where("name", "==", city).stream()
+    for doc in docs:
+        data = doc.to_dict()
+        return data["population"]
+    return None
+
 #get cities by state(state name) returns all cities in state
 def get_city_by_state(state_name):
     docs = db.collection("Cities").where("state", "==", state_name).stream()
@@ -76,18 +86,21 @@ def get_city_by_state(state_name):
     else:
         return return_list
 
+#Number Queries
 #get cities by population(operator, value) for example population > 10000 would be get cities by population(>, 10000)
 def get_city_by_population(operator, value):
     docs = db.collection("Cities").where("population", operator, value).stream()
     for doc in docs:
         return doc.to_dict()
     return None
+
 #get cities by wage(operator, value)
 def get_city_by_wage(operator, value):
     docs = db.collection("Cities").where("wage", operator, value).stream()
     for doc in docs:
         return doc.to_dict()
     return None
+
 #get cities by area(operator, value)
 def get_city_by_area(operator, value):
     docs = db.collection("Cities").where("area", operator, value).stream()
@@ -98,6 +111,7 @@ def get_city_by_area(operator, value):
         return None
     else:
         return return_list
+    
 #get cities by rank(operator, value)
 def get_city_by_rank(operator, value):
     docs = db.collection("Cities").where("rank", operator, value).stream()
