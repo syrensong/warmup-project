@@ -58,7 +58,7 @@ def doQuery (column, city="none", operand="none", quantity=0):
     
     print("Invalid Query Message")
 
-
+#Works
 def doCityPopulationQuery(city):
     city_data = fe.getCityPopulation(city)
     
@@ -67,8 +67,14 @@ def doCityPopulationQuery(city):
     else:
         print(f"City '{city}' not found")
 
+#Works
 def doCityWhereQuery(city):
-    return city
+    city_data = fe.getStateByCity(city)
+    
+    if city_data:
+        print(f"{city} is in {city_data}")
+    else:
+        print(f"City '{city}' not found")
 
 #Works
 def doCityStateQuery(state):

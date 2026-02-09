@@ -75,6 +75,14 @@ def getCityPopulation(city):
         return data["population"]
     return None
 
+#get state by city name
+def getStateByCity(city):
+    docs = db.collection("Cities").where("name", "==", city).stream()
+    for doc in docs:
+        data = doc.to_dict()
+        return data["state"]
+    return None
+
 #get cities by state(state name) returns all cities in state
 def get_city_by_state(state_name):
     docs = db.collection("Cities").where("state", "==", state_name).stream()
