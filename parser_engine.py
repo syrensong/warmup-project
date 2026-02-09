@@ -51,7 +51,7 @@ def doQuery (column, city="none", operand="none", quantity=0):
         getHelp()
     else:
         print("Invalid Query Message")
-
+#THIS ONE WORKS!
 def doCityPopulationQuery(operator, value):
     #return city
     city_data = fe.get_city_by_population(operator, value)
@@ -113,8 +113,7 @@ def getHelp():
             "\tAREA <=> #: returns cities with an area >,<,= the given number\n"
             "\tRANK <=> #: returns cities with a rank >,<,= the given number\n"
             )
-    
-doCityAreaQuery(">", 100)
+
 
 while True:
     user_input = input("Please choose your command between WHERE, POPULATION, STATE, AREA, RANK, BIG, NUMBER,HELP: ")

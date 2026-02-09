@@ -89,7 +89,6 @@ def get_city_by_area(operator, value):
     return_list = []
     for doc in docs:
         return_list.append(doc.to_dict())
-        print(f"Found city: {doc}") 
     if return_list == []:
         return None
     else:
@@ -108,4 +107,3 @@ def get_all_cities():
     return None
 
 
-print(get_city_by_area(">", 1000))
