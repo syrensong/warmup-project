@@ -68,9 +68,14 @@ def get_city_by_name(city_name):
 #get cities by state(state name) returns all cities in state
 def get_city_by_state(state_name):
     docs = db.collection("Cities").where("state", "==", state_name).stream()
+    return_list = []
     for doc in docs:
-        return doc.to_dict()
-    return None
+        return_list.append(doc.to_dict())
+    if return_list == []:
+        return None
+    else:
+        return return_list
+
 #get cities by population(operator, value) for example population > 10000 would be get cities by population(>, 10000)
 def get_city_by_population(operator, value):
     docs = db.collection("Cities").where("population", operator, value).stream()

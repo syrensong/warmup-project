@@ -64,13 +64,16 @@ def doCityPopulationQuery(city):
 def doCityWhereQuery(city):
     return city
 
-def doCityStateQuery(city):
-    #return city
-    city_data = fe.get_city_by_state(city)
-    if city_data:
-        print(f"The cities in {city} are {city_data['city']}")
+#Works
+def doCityStateQuery(state):
+    city_list = fe.get_city_by_state(state)
+
+    if city_list:
+        print(f"The cities in {state} are:")
+        for city in city_list:
+            print(f" - {city['name']}")
     else:
-        print(f"City '{city}' not found")
+        print(f"State '{state}' not found")
 
 def doCityAreaQuery(city):
     return city
