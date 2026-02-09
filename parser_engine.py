@@ -52,11 +52,12 @@ def doQuery (column, city="none", operand="none", quantity=0):
     else:
         print("Invalid Query Message")
 
-def doCityPopulationQuery(city):
+def doCityPopulationQuery(operator, value):
     #return city
-    city_data = fe.get_city_by_name(city)
+    city_data = fe.get_city_by_population(operator, value)
     if city_data:
-        print(f"{city} has a population of {city_data['population']}")
+        for data in city_data:
+            print(f"{data['name']}")
     else:
         print(f"City '{city}' not found")
 
