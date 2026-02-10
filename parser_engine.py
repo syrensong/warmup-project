@@ -88,13 +88,29 @@ def doCityStateQuery(state):
         print(f"State '{state}' not found")
 
 def doCityAreaQuery(city):
-    return city
+
+    city_list = fe.get_city_by_area(city)
+    if city_list:
+        print(f"The area of {city} is {city_list}['area']")
+    else:
+        print(f"Area of '{city}' not found")
 
 def doCityRankQuery(city):
-    return city
+        city_list = fe.get_city_by_rank(city)
+        if city_list:
+            print(f"The rank of {city} is {city_list}['rank']")
+        else:
+            print(f" The rank'{city}' is not found")
+
 
 def doCityBigQuery(city):
-    return city
+    city_list = fe.City['big_city']
+    if city_list:
+        print(f"Big city '{city}' ")
+        for data in city_list:
+            print(f"{data['name']}")
+    else:
+        print(f"'{city}' is not a big city")
 
 #THIS ONE doesn't WORK!
 def doNumPopulationQuery(operand, quantity):
@@ -107,7 +123,11 @@ def doNumPopulationQuery(operand, quantity):
         print(f"City not found")
 
 def doNumWageQuery(operand, quantity):
-    return quantity
+    city_list = fe.get_city_by_wage(city)
+    if city_list:
+        print(f"The wage of {city} is {city_list}['wage']")
+    else:
+        print(f" The wage of '{city}' is not found")
 
 #Works
 def doNumAreaQuery(operand, quantity):
@@ -120,8 +140,12 @@ def doNumAreaQuery(operand, quantity):
         print(f"City '{city}' not found")
 
 def doNumRankQuery(operand, quantity):
-    return quantity
-
+    city_data = fe.get_city_by_rank(operand, quantity)
+    if city_data:
+        for data in city_data:
+            print(f"{data['name']}")
+    else:
+        print(f"City '{city}' not found")
 def getHelp():
     print("City Commands\n"
             "\tWHERE “City”: returns the state the chosen city is in\n"
