@@ -106,7 +106,6 @@ def doCityRankQuery(city):
 #Works
 def doCityBigQuery(city):
     city_list = fe.getCityBig(city)
-    print(city_list)
     if "big city" in city_list:
         print(f"'{city}' is a big city")
     else:
@@ -120,15 +119,15 @@ def doNumPopulationQuery(operand, quantity):
         for data in city_data:
             print(f"{data['name']}")
     else:
-        print(f"City not found")
+        print(f"Cities not found")
 
 #Doesn't work, always returns none
 def doNumWageQuery(operand, quantity):
     city_list = fe.get_city_by_wage(operand, quantity)
     if city_list:
-        print(f"The wage of {city} is {city_list['living_wage']}")
+        print(f"The cities with a wage {operand} {quantity} are {city_list['living wage']}")
     else:
-        print(f" The wage of '{city}' is not found")
+        print(f"Cities not found")
 
 #Works
 def doNumAreaQuery(operand, quantity):
@@ -138,7 +137,7 @@ def doNumAreaQuery(operand, quantity):
         for data in city_data:
             print(f"{data['name']}")
     else:
-        print(f"City '{city}' not found")
+        print(f"Cities not found")
 
 #Works
 def doNumRankQuery(operand, quantity):
@@ -147,7 +146,7 @@ def doNumRankQuery(operand, quantity):
         for data in city_data:
             print(f"{data['name']}")
     else:
-        print(f"City '{city}' not found")
+        print(f"Cities not found")
 
 #Works
 def getHelp():
