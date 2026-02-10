@@ -87,24 +87,25 @@ def doCityStateQuery(state):
     else:
         print(f"State '{state}' not found")
 
+#Works
 def doCityAreaQuery(city):
-
-    city_list = fe.get_city_by_area(city)
+    city_list = fe.getCityArea(city)
     if city_list:
-        print(f"The area of {city} is {city_list}['area']")
+        print(f"The area of {city} is {city_list}")
     else:
         print(f"Area of '{city}' not found")
 
+#Works
 def doCityRankQuery(city):
-        city_list = fe.get_city_by_rank(city)
-        if city_list:
-            print(f"The rank of {city} is {city_list}['rank']")
-        else:
-            print(f" The rank'{city}' is not found")
+    city_list = fe.getCityRank(city)
+    if city_list:
+        print(f"{city} is ranked number {city_list}")
+    else:
+        print(f"Rank of {city} is not found")
 
 
 def doCityBigQuery(city):
-    city_list = fe.City['big_city']
+    city_list = fe.getCityBig(city)
     if city_list:
         print(f"Big city '{city}' ")
         for data in city_list:
@@ -112,7 +113,7 @@ def doCityBigQuery(city):
     else:
         print(f"'{city}' is not a big city")
 
-#THIS ONE doesn't WORK!
+#Works
 def doNumPopulationQuery(operand, quantity):
     #return city
     city_data = fe.get_city_by_population(operand, quantity)
@@ -122,10 +123,11 @@ def doNumPopulationQuery(operand, quantity):
     else:
         print(f"City not found")
 
+#Doesn't work, always returns none
 def doNumWageQuery(operand, quantity):
-    city_list = fe.get_city_by_wage(city)
+    city_list = fe.get_city_by_wage(operand, quantity)
     if city_list:
-        print(f"The wage of {city} is {city_list}['wage']")
+        print(f"The wage of {city} is {city_list['wage']}")
     else:
         print(f" The wage of '{city}' is not found")
 
@@ -139,6 +141,7 @@ def doNumAreaQuery(operand, quantity):
     else:
         print(f"City '{city}' not found")
 
+#Works
 def doNumRankQuery(operand, quantity):
     city_data = fe.get_city_by_rank(operand, quantity)
     if city_data:
@@ -146,6 +149,8 @@ def doNumRankQuery(operand, quantity):
             print(f"{data['name']}")
     else:
         print(f"City '{city}' not found")
+
+#Works
 def getHelp():
     print("City Commands\n"
             "\tWHERE “City”: returns the state the chosen city is in\n"

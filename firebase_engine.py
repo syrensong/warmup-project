@@ -94,20 +94,52 @@ def get_city_by_state(state_name):
     else:
         return return_list
 
+#get area by city name
+def getCityArea(city):
+    docs = db.collection("Cities").where("name", "==", city).stream()
+    for doc in docs:
+        data = doc.to_dict()
+        return data["area"]
+    return None
+
+#get rank by city name
+def getCityRank(city):
+    docs = db.collection("Cities").where("name", "==", city).stream()
+    for doc in docs:
+        data = doc.to_dict()
+        return data["rank"]
+    return None
+
+#get if city is big by city name
+def getCityBig(city):
+    docs = db.collection("Cities").where("name", "==", city).stream()
+    for doc in docs:
+        data = doc.to_dict()
+        return data["big_city"]
+    return None
+
 #Number Queries
 #get cities by population(operator, value) for example population > 10000 would be get cities by population(>, 10000)
 def get_city_by_population(operator, value):
     docs = db.collection("Cities").where("population", operator, value).stream()
+    return_list = []
     for doc in docs:
-        return doc.to_dict()
-    return None
+        return_list.append(doc.to_dict())
+    if return_list == []:
+        return None
+    else:
+        return return_list
 
 #get cities by wage(operator, value)
 def get_city_by_wage(operator, value):
-    docs = db.collection("Cities").where("wage", operator, value).stream()
+    docs = db.collection("Cities").where("living_wage", operator, value).stream()
+    return_list = []
     for doc in docs:
-        return doc.to_dict()
-    return None
+        return_list.append(doc.to_dict())
+    if return_list == []:
+        return None
+    else:
+        return return_list
 
 #get cities by area(operator, value)
 def get_city_by_area(operator, value):
@@ -123,9 +155,14 @@ def get_city_by_area(operator, value):
 #get cities by rank(operator, value)
 def get_city_by_rank(operator, value):
     docs = db.collection("Cities").where("rank", operator, value).stream()
+    return_list = []
     for doc in docs:
-        return doc.to_dict()
-    return None
+        return_list.append(doc.to_dict())
+    if return_list == []:
+        return None
+    else:
+        return return_list
+
 #get all cities()
 def get_all_cities():
     docs = db.collection("Cities")
