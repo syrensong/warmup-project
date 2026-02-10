@@ -103,13 +103,12 @@ def doCityRankQuery(city):
     else:
         print(f"Rank of {city} is not found")
 
-
+#Works
 def doCityBigQuery(city):
     city_list = fe.getCityBig(city)
-    if city_list:
-        print(f"Big city '{city}' ")
-        for data in city_list:
-            print(f"{data['name']}")
+    print(city_list)
+    if "big city" in city_list:
+        print(f"'{city}' is a big city")
     else:
         print(f"'{city}' is not a big city")
 

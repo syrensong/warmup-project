@@ -113,9 +113,10 @@ def getCityRank(city):
 #get if city is big by city name
 def getCityBig(city):
     docs = db.collection("Cities").where("name", "==", city).stream()
+    print(docs)
     for doc in docs:
         data = doc.to_dict()
-        return data["big_city"]
+        return data
     return None
 
 #Number Queries
@@ -132,7 +133,7 @@ def get_city_by_population(operator, value):
 
 #get cities by wage(operator, value)
 def get_city_by_wage(operator, value):
-    docs = db.collection("Cities").where("living_wage", operator, value).stream()
+    docs = db.collection("Cities").where("living wage", operator, value).stream()
     return_list = []
     for doc in docs:
         return_list.append(doc.to_dict())
