@@ -123,9 +123,10 @@ def doNumPopulationQuery(operand, quantity):
 
 #Doesn't work, always returns none
 def doNumWageQuery(operand, quantity):
-    city_list = fe.get_city_by_wage(operand, quantity)
-    if city_list:
-        print(f"The cities with a wage {operand} {quantity} are {city_list['living wage']}")
+    city_data = fe.get_city_by_wage(operand, quantity)
+    if city_data:
+        for data in city_data:
+            print(f"{data['name']}")
     else:
         print(f"Cities not found")
 
