@@ -119,7 +119,7 @@ def doNumPopulationQuery(operand, quantity):
     else:
         print(f"Cities not found")
 
-#Doesn't work, always returns none
+#works!
 def doNumWageQuery(operand, quantity):
     city_list = fe.get_city_by_wage(operand, quantity)
     if city_list:
