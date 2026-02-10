@@ -127,7 +127,7 @@ def doNumPopulationQuery(operand, quantity):
 def doNumWageQuery(operand, quantity):
     city_list = fe.get_city_by_wage(operand, quantity)
     if city_list:
-        print(f"The wage of {city} is {city_list['wage']}")
+        print(f"The wage of {city} is {city_list['living_wage']}")
     else:
         print(f" The wage of '{city}' is not found")
 
