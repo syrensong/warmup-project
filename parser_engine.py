@@ -2,7 +2,6 @@ import pyparsing as pp
 from firebase_admin import db
 import firebase_engine as fe
 from pyparsing import Word, Literal, Combine, Group, Optional
-from lark import Lark, Transformer
 import shlex
 
 
