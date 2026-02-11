@@ -2,6 +2,7 @@ import pyparsing as pp
 import firebase_engine as fe
 from pyparsing import Word, Literal, Combine, Group, Optional
 import shlex
+from tabulate import tabulate
 
 query_keywords = pp.oneOf("POPULATION WHERE WAGE STATE AREA RANK BIG")
 operators = pp.oneOf("< > == <= >=")
@@ -11,20 +12,20 @@ help_function = pp.Literal("HELP")
 
 expression = query_keywords + operators  + query_keywords
 
-def doQuery (column, city="none", operand="none", quantity=0):
+def doQuery (column, city="none", operand="none", quantity=0, detail="none"):
     if column == "HELP":
         getHelp()
         return
     
     if quantity != 0:
         if column == "POPULATION":
-            doNumPopulationQuery(operand, quantity)
+            doNumPopulationQuery(operand, quantity, detail)
         elif column == "WAGE":
-            doNumWageQuery(operand, quantity)
+            doNumWageQuery(operand, quantity, detail)
         elif column == "AREA":
-            doNumAreaQuery(operand, quantity)
+            doNumAreaQuery(operand, quantity, detail)
         elif column == "RANK":
-            doNumRankQuery(operand, quantity)
+            doNumRankQuery(operand, quantity, detail)
         return
     
     if city != "none":
@@ -47,12 +48,11 @@ def doQuery (column, city="none", operand="none", quantity=0):
 #Returns the population of the given city
 def doCityPopulationQuery(city):
     city_data = fe.getCityPopulation(city)
-    
     if city_data:
         print(f"The population of {city} is {city_data}")
     else:
         print(f"City '{city}' not found")
-
+        
 #Returns the state of the given city
 def doCityWhereQuery(city):
     city_data = fe.getStateByCity(city)
@@ -64,75 +64,103 @@ def doCityWhereQuery(city):
 
 #Returns all the cities in the given state
 def doCityStateQuery(state):
-    city_list = fe.get_city_by_state(state)
+    city_data = fe.get_city_by_state(state)
 
-    if city_list:
+    if city_data:
         print(f"The cities in {state} are:")
-        for city in city_list:
+        for city in city_data:
             print(f" - {city['name']}")
     else:
         print(f"State '{state}' not found")
 
 #Returns the area of the given city
 def doCityAreaQuery(city):
-    city_list = fe.getCityArea(city)
-    if city_list:
-        print(f"The area of {city} is {city_list}")
+    city_data = fe.getCityArea(city)
+    if city_data:
+        print(f"The area of {city} is {city_data}")
     else:
         print(f"Area of '{city}' not found")
 
 #Returns the rank of a given city
 def doCityRankQuery(city):
-    city_list = fe.getCityRank(city)
-    if city_list:
-        print(f"{city} is ranked number {city_list}")
+    city_data = fe.getCityRank(city)
+    if city_data:
+        print(f"{city} is ranked number {city_data}")
     else:
         print(f"Rank of {city} is not found")
 
 #Returns whether or not a city is considered a big city
 def doCityBigQuery(city):
-    city_list = fe.getCityBig(city)
-    if "big city" in city_list:
+    city_data = fe.getCityBig(city)
+    if "big city" in city_data:
         print(f"'{city}' is a big city")
     else:
         print(f"'{city}' is not a big city")
 
 #Returns the cities whose population is <=> the given quantity
-def doNumPopulationQuery(operand, quantity):
+def doNumPopulationQuery(operand, quantity, detail):
     #return city
-    city_data = fe.get_city_by_population(operand, quantity)
-    if city_data:
-        for data in city_data:
-            print(f"{data['name']}")
+    city_data = fe.getCityByPopulation(operand, quantity)
+    if detail == "none":
+        if city_data:
+            for data in city_data:
+                print(f"{data['name']}")
+        else:
+            print(f"Cities not found")
     else:
-        print(f"Cities not found")
+        if city_data:
+            table = tabulate(city_data, headers="keys")
+            print(table)
+        else:
+            print(f"City '{city}' not found")
 
 #Returns the cities whose wage is <=> the given quantity
-def doNumWageQuery(operand, quantity):
-    city_list = fe.get_city_by_wage(operand, quantity)
-    if city_list:
-        for data in city_list:
-            print(f"{data['name']}")
+def doNumWageQuery(operand, quantity, detail):
+    city_data = fe.getCityByWage(operand, quantity)
+    if detail == "none":
+        if city_data:
+            for data in city_data:
+                print(f"{data['name']}")
+        else:
+            print(f"Cities not found")
     else:
-        print(f"Cities not found")
+        if city_data:
+            table = tabulate(city_data, headers="keys")
+            print(table)
+        else:
+            print(f"City '{city}' not found")
 
 #Returns the cities whose area is <=> the given quantity
-def doNumAreaQuery(operand, quantity):
-    city_data = fe.get_city_by_area(operand, quantity)
-    if city_data:
-        for data in city_data:
-            print(f"{data['name']}")
+def doNumAreaQuery(operand, quantity, detail):
+    city_data = fe.getCityByArea(operand, quantity)
+    if detail == "none":
+        if city_data:
+            for data in city_data:
+                print(f"{data['name']}")
+        else:
+            print(f"Cities not found")
     else:
-        print(f"Cities not found")
+        if city_data:
+            table = tabulate(city_data, headers="keys")
+            print(table)
+        else:
+            print(f"City '{city}' not found")
 
 #Returns the cities whose rank is <=> the given quantity
-def doNumRankQuery(operand, quantity):
-    city_data = fe.get_city_by_rank(operand, quantity)
-    if city_data:
-        for data in city_data:
-            print(f"{data['name']}")
+def doNumRankQuery(operand, quantity, detail):
+    city_data = fe.getCityByRank(operand, quantity)
+    if detail == "none":
+        if city_data:
+            for data in city_data:
+                print(f"{data['name']}")
+        else:
+            print(f"Cities not found")
     else:
-        print(f"Cities not found")
+        if city_data:
+            table = tabulate(city_data, headers="keys")
+            print(table)
+        else:
+            print(f"City '{city}' not found")
 
 #Prints the options for possible queries
 def getHelp():
@@ -161,12 +189,18 @@ if __name__ == '__main__':
         column = parts[0].upper()
         if column == "EXIT":
             run = False
+            break
         city = "none"
         operator = "none"
         quantity = 0
+        detail = "none"
         if parts[1] in {"<", ">", "<=", ">=", "="}:
             operator = parts[1]
             quantity = int(parts[2])
+            if parts[3] in {"detail"}:
+                detail = parts[3]
         else:
             city = parts[1]
-        doQuery(column, city, operator, quantity)
+            if len(parts) > 2 and parts[2] in {"detail"}:
+                detail = parts[2]
+        doQuery(column, city, operator, quantity, detail)
