@@ -14,6 +14,7 @@ help_function = pp.Literal("HELP")
 
 expression = query_keywords + operators  + query_keywords
 
+#Base query function that calls specific functions based on the given input
 def doQuery (column, city="none", operand="none", quantity=0, detail="none"):
     if column == "HELP":
         getHelp()
@@ -47,6 +48,7 @@ def doQuery (column, city="none", operand="none", quantity=0, detail="none"):
     
     print("Invalid Query Message")
 
+#City Queries
 #Returns the population of the given city
 def doCityPopulationQuery(city):
     city_data = fe.getCityPopulation(city)
@@ -99,6 +101,7 @@ def doCityBigQuery(city):
     else:
         print(f"'{city}' is not a big city")
 
+#Number Queries
 #Returns the cities whose population is <=> the given quantity
 def doNumPopulationQuery(operand, quantity, detail):
     #return city
