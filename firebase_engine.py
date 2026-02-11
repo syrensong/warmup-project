@@ -3,48 +3,13 @@ from firebase_admin import credentials
 from firebase_admin import firestore
 
 # Use a service account.
-# Laylas path: /Users/laylamusallam/Downloads/CS3050/warmup-project-ea50f-firebase-adminsdk-fbsvc-29b43b0a28
-# Varuns path: C:/Users/varun/CS_3050/warmup-project-ea50f-firebase-adminsdk-fbsvc-81f9c5d810.json
 cred = credentials.Certificate("../warmup-project-ea50f-firebase-adminsdk-fbsvc-81f9c5d810.json")
 app = firebase_admin.initialize_app(cred)
 db = firestore.client()
 
-def export_cities_to_json(filename="cities_data.json"):
-    """Export all cities from Firestore to a JSON file"""
-    print("Fetching all cities from Firestore...")
-    
-    docs = db.collection("cities").stream()
-    cities = []
-    
-    count = 0
-    for doc in docs:
-        count += 1
-        city_data = doc.to_dict()
-        city_data['doc_id'] = doc.id  # Include document ID
-        cities.append(city_data)
-        print(f"Exported: {city_data.get('name', 'Unknown')}")
-    
-    # Write to JSON file
-    with open(filename, 'w', encoding='utf-8') as f:
-        json.dump(cities, f, indent=2, ensure_ascii=False)
-    
-    print(f"\n✓ Exported {count} cities to {filename}")
-    return cities
-
-if __name__ == "__main__":
-    export_cities_to_json()
-    
-try:
-    app = firebase_admin.get_app()
-except ValueError:
-    # If not initialized, initialize it
-    cred = credentials.Certificate("C:/Users/varun/CS_3050/warmup-project-ea50f-firebase-adminsdk-fbsvc-81f9c5d810.json")
-    app = firebase_admin.initialize_app(cred)
-
-
-db = firestore.client()
 
 class City:
+    # Initializes the fields for our collections
     def __init__(self, name, state, population=0, wage=0, area=0, density=0, rank=0, big_city=False):
         self.area = area
         self.big_city = big_city
@@ -55,6 +20,7 @@ class City:
         self.rank = rank
         self.state = state
 
+    # Turns the document into a python dictionary where we can access data
     def to_dict(self):
         return {
             'name': self.name,
@@ -80,19 +46,16 @@ class City:
                 big_city={self.big_city},\
             )"
 
-docs = db.collection("cities").stream()
-for doc in docs:
-    print(f"{doc.id} => {doc.to_dict()}")
-
-def get_city_by_name(city_name):
+# Returns the names of all cities in our document
+def getCityByName(city_name):
     docs = db.collection("Cities").where("name", "==", city_name).limit(1).stream()
     for doc in docs:
         return doc.to_dict()
     return None
 
 
-#City Queries
-#get population by city name
+# City Queries
+# Returns population of a given city
 def getCityPopulation(city):
     docs = db.collection("Cities").where("name", "==", city).stream()
     for doc in docs:
@@ -100,7 +63,7 @@ def getCityPopulation(city):
         return data["population"]
     return None
 
-#get state by city name
+# Returns the state of a given city
 def getStateByCity(city):
     docs = db.collection("Cities").where("name", "==", city).stream()
     for doc in docs:
@@ -108,8 +71,8 @@ def getStateByCity(city):
         return data["state"]
     return None
 
-#get cities by state(state name) returns all cities in state
-def get_city_by_state(state_name):
+# Returns all cities in a given state
+def getCityByState(state_name):
     docs = db.collection("Cities").where("state", "==", state_name).stream()
     return_list = []
     for doc in docs:
@@ -119,7 +82,7 @@ def get_city_by_state(state_name):
     else:
         return return_list
 
-#get area by city name
+# Returns the area of a given city
 def getCityArea(city):
     docs = db.collection("Cities").where("name", "==", city).stream()
     for doc in docs:
@@ -127,7 +90,7 @@ def getCityArea(city):
         return data["area"]
     return None
 
-#get rank by city name
+# Returns the rank of a given city
 def getCityRank(city):
     docs = db.collection("Cities").where("name", "==", city).stream()
     for doc in docs:
@@ -135,17 +98,18 @@ def getCityRank(city):
         return data["rank"]
     return None
 
-#get if city is big by city name
-def getCityBig(city):
+# Returns whether or not a city is big using the city name
+def isCityBig(city):
     docs = db.collection("Cities").where("name", "==", city).stream()
     for doc in docs:
         data = doc.to_dict()
         return data
     return None
 
-#Number Queries
-#get cities by population(operator, value) for example population > 10000 would be get cities by population(>, 10000)
-def get_city_by_population(operator, value):
+# Number Queries
+# Returns cities with a wage which fits the expression provided, 
+# ex. getCityByPopulation(>, 1000000) would return all cities with a population greater than 1 million
+def getCityByPopulation(operator, value):
     docs = db.collection("Cities").where("population", operator, value).stream()
     return_list = []
     for doc in docs:
@@ -155,8 +119,9 @@ def get_city_by_population(operator, value):
     else:
         return return_list
 
-#get cities by wage(operator, value)
-def get_city_by_wage(operator, value):
+# Returns cities with a wage which fits the expression provided, 
+# ex. getCityByWage(>=, 20) would return any cities with a living wage greater than or equal to 20 dollars
+def getCityByWage(operator, value):
     docs = db.collection("Cities").where("wage", operator, value).stream()
     return_list = []
     for doc in docs:
@@ -166,8 +131,9 @@ def get_city_by_wage(operator, value):
     else:
         return return_list
 
-#get cities by area(operator, value)
-def get_city_by_area(operator, value):
+# Returns cities with an area which fits the expression provided, 
+# ex. getCityByArea(<=, 10000) would return any cities with an area less than or equal to 10000 sq. miles
+def getCityByArea(operator, value):
     docs = db.collection("Cities").where("area", operator, value).stream()
     return_list = []
     for doc in docs:
@@ -177,8 +143,9 @@ def get_city_by_area(operator, value):
     else:
         return return_list
     
-#get cities by rank(operator, value)
-def get_city_by_rank(operator, value):
+# Returns cities with a rank which fits the expression provided, 
+# ex. getCityByRank(<=, 10) would return the top ten cities with the largest population
+def getCityByRank(operator, value):
     docs = db.collection("Cities").where("rank", operator, value).stream()
     return_list = []
     for doc in docs:
@@ -188,8 +155,8 @@ def get_city_by_rank(operator, value):
     else:
         return return_list
 
-#get all cities()
-def get_all_cities():
+# Returns all cities in the collection
+def getAllCities():
     docs = db.collection("Cities")
     for doc in docs:
         return doc.to_dict()
