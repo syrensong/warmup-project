@@ -9,13 +9,38 @@ cred = credentials.Certificate("../warmup-project-ea50f-firebase-adminsdk-fbsvc-
 app = firebase_admin.initialize_app(cred)
 db = firestore.client()
 
+def export_cities_to_json(filename="cities_data.json"):
+    """Export all cities from Firestore to a JSON file"""
+    print("Fetching all cities from Firestore...")
+    
+    docs = db.collection("cities").stream()
+    cities = []
+    
+    count = 0
+    for doc in docs:
+        count += 1
+        city_data = doc.to_dict()
+        city_data['doc_id'] = doc.id  # Include document ID
+        cities.append(city_data)
+        print(f"Exported: {city_data.get('name', 'Unknown')}")
+    
+    # Write to JSON file
+    with open(filename, 'w', encoding='utf-8') as f:
+        json.dump(cities, f, indent=2, ensure_ascii=False)
+    
+    print(f"\n✓ Exported {count} cities to {filename}")
+    return cities
+
+if __name__ == "__main__":
+    export_cities_to_json()
+    
 try:
-    # Check if Firebase is already initialized
     app = firebase_admin.get_app()
 except ValueError:
     # If not initialized, initialize it
     cred = credentials.Certificate("C:/Users/varun/CS_3050/warmup-project-ea50f-firebase-adminsdk-fbsvc-81f9c5d810.json")
     app = firebase_admin.initialize_app(cred)
+
 
 db = firestore.client()
 
@@ -170,5 +195,3 @@ def get_all_cities():
     for doc in docs:
         return doc.to_dict()
     return None
-
-
