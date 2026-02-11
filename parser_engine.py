@@ -66,7 +66,7 @@ def doCityWhereQuery(city):
 
 #Returns all the cities in the given state
 def doCityStateQuery(state):
-    city_data = fe.get_city_by_state(state)
+    city_data = fe.getCityByState(state)
 
     if city_data:
         print(f"The cities in {state} are:")
