@@ -4,8 +4,7 @@ from pyparsing import Word, Literal, Combine, Group, Optional
 import shlex
 
 query_keywords = pp.oneOf("POPULATION WHERE WAGE STATE AREA RANK BIG")
-operators = pp.oneOf("< > <= =>")
-#operator = Literal("<") | Literal(">") | Literal("<=") | Literal("=>")|Literal("AND")|Literal("OR")|Literal("HELP")
+operators = pp.oneOf("< > == <= >=")
 and_function = pp.Literal("AND")
 or_function = pp.Literal("OR")
 help_function = pp.Literal("HELP")
@@ -110,9 +109,9 @@ def doNumPopulationQuery(operand, quantity):
 
 #Returns the cities whose wage is <=> the given quantity
 def doNumWageQuery(operand, quantity):
-    city_data = fe.get_city_by_wage(operand, quantity)
-    if city_data:
-        for data in city_data:
+    city_list = fe.get_city_by_wage(operand, quantity)
+    if city_list:
+        for data in city_list:
             print(f"{data['name']}")
     else:
         print(f"Cities not found")
