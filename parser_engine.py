@@ -2,6 +2,8 @@ import pyparsing as pp
 import firebase_engine as fe
 from pyparsing import Word, Literal, Combine, Group, Optional
 import shlex
+import warnings
+warnings.filterwarnings("ignore", message="Detected filter using positional arguments.")
 from tabulate import tabulate
 
 query_keywords = pp.oneOf("POPULATION WHERE WAGE STATE AREA RANK BIG")
