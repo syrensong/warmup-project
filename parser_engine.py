@@ -182,10 +182,10 @@ def getHelp():
             )
 
 if __name__ == '__main__':
+    print("Please choose your command between WHERE, POPULATION, WAGE, STATE, AREA, RANK, BIG, NUMBER, HELP:")
     run = True
     while run:
-        print("$$")
-        user_input = input().strip()
+        user_input = input("$$ ").strip()
         parts = shlex.split(user_input)
         print(parts)
         column = parts[0].upper()
