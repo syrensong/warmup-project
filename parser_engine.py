@@ -189,14 +189,16 @@ if __name__ == '__main__':
         parts = shlex.split(user_input)
         print(parts)
         column = parts[0].upper()
-        if column == "EXIT":
-            run = False
-            break
         city = "none"
         operator = "none"
         quantity = 0
         detail = "none"
-        if parts[1] in {"<", ">", "<=", ">=", "="}:
+        if column == "EXIT":
+            run = False
+            break
+        elif column == "HELP":
+            doQuery(column, city, operator, quantity, detail)
+        elif parts[1] in {"<", ">", "<=", ">=", "="}:
             operator = parts[1]
             quantity = int(parts[2])
             if parts[3] in {"detail"}:
