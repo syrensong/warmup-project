@@ -93,7 +93,7 @@ def doCityRankQuery(city):
 
 #Returns whether or not a city is considered a big city
 def doCityBigQuery(city):
-    city_data = fe.getCityBig(city)
+    city_data = fe.isCityBig(city)
     if "big city" in city_data:
         print(f"'{city}' is a big city")
     else:
