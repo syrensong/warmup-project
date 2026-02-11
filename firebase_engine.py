@@ -45,11 +45,11 @@ except ValueError:
 db = firestore.client()
 
 class City:
-    def __init__(self, name, state, population=0, living_wage=0, area=0, density=0, rank=0, big_city=False):
+    def __init__(self, name, state, population=0, wage=0, area=0, density=0, rank=0, big_city=False):
         self.area = area
         self.big_city = big_city
         self.density = density
-        self.living_wage = living_wage
+        self.wage = wage
         self.name = name
         self.population = population
         self.rank = rank
@@ -61,7 +61,7 @@ class City:
             'state': self.state,
             'rank': self.rank,
             'population': self.population,
-            'living_wage': self.living_wage,
+            'wage': self.wage,
             'area': self.area,
             'density': self.density,
             'big_city': self.big_city
@@ -74,7 +74,7 @@ class City:
                 state={self.state}, \
                 rank={self.rank},\
                 population={self.population}, \
-                living_wage={self.living_wage}, \
+                wage={self.wage}, \
                 area={self.area},\
                 density={self.density},\
                 big_city={self.big_city},\
@@ -157,11 +157,10 @@ def get_city_by_population(operator, value):
 
 #get cities by wage(operator, value)
 def get_city_by_wage(operator, value):
-    docs = db.collection("Cities").where("living wage", operator, value).stream()
+    docs = db.collection("Cities").where("wage", operator, value).stream()
     return_list = []
     for doc in docs:
         return_list.append(doc.to_dict())
-    print(return_list)
     if return_list == []:
         return None
     else:
