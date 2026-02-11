@@ -57,6 +57,7 @@ def doQuery (column, city="none", operand="none", quantity=0):
     print("Invalid Query Message")
 
 #Works
+# This function returns the population of the chosen city
 def doCityPopulationQuery(city):
     city_data = fe.getCityPopulation(city)
     
@@ -66,6 +67,7 @@ def doCityPopulationQuery(city):
         print(f"City '{city}' not found")
 
 #Works
+# This function returns the state the chosen city is in
 def doCityWhereQuery(city):
     city_data = fe.getStateByCity(city)
     
@@ -75,6 +77,7 @@ def doCityWhereQuery(city):
         print(f"City '{city}' not found")
 
 #Works
+#This function returns a list of all the cities in the chosen state
 def doCityStateQuery(state):
     city_list = fe.get_city_by_state(state)
 
@@ -86,6 +89,7 @@ def doCityStateQuery(state):
         print(f"State '{state}' not found")
 
 #Works
+# This function returns the area of the chosen city
 def doCityAreaQuery(city):
     city_list = fe.getCityArea(city)
     if city_list:
@@ -94,6 +98,7 @@ def doCityAreaQuery(city):
         print(f"Area of '{city}' not found")
 
 #Works
+# This function returns the rank of the chosen city
 def doCityRankQuery(city):
     city_list = fe.getCityRank(city)
     if city_list:
@@ -102,6 +107,7 @@ def doCityRankQuery(city):
         print(f"Rank of {city} is not found")
 
 #Works
+# This function returns if the chosen city is big
 def doCityBigQuery(city):
     city_list = fe.getCityBig(city)
     if "big city" in city_list:
@@ -110,6 +116,7 @@ def doCityBigQuery(city):
         print(f"'{city}' is not a big city")
 
 #Works
+# This function returns cities with a population >,<,= the given number
 def doNumPopulationQuery(operand, quantity):
     #return city
     city_data = fe.get_city_by_population(operand, quantity)
@@ -120,6 +127,7 @@ def doNumPopulationQuery(operand, quantity):
         print(f"Cities not found")
 
 #works!
+# This function returns cities with a living wage >,<,= the given number
 def doNumWageQuery(operand, quantity):
     city_list = fe.get_city_by_wage(operand, quantity)
     if city_list:
@@ -129,6 +137,7 @@ def doNumWageQuery(operand, quantity):
         print(f"Cities not found")
 
 #Works
+# This function returns cities with an area >,<,= the given number
 def doNumAreaQuery(operand, quantity):
     #return city
     city_data = fe.get_city_by_area(operand, quantity)
@@ -139,6 +148,7 @@ def doNumAreaQuery(operand, quantity):
         print(f"Cities not found")
 
 #Works
+# This function returns the cities that have a rank < > = to the given number.
 def doNumRankQuery(operand, quantity):
     city_data = fe.get_city_by_rank(operand, quantity)
     if city_data:
@@ -148,6 +158,7 @@ def doNumRankQuery(operand, quantity):
         print(f"Cities not found")
 
 #Works
+# The help function will guide the users on what command they can use
 def getHelp():
     print("City Commands\n"
             "\tWHERE “City”: returns the state the chosen city is in\n"
@@ -162,7 +173,7 @@ def getHelp():
             "\tAREA <=> #: returns cities with an area >,<,= the given number\n"
             "\tRANK <=> #: returns cities with a rank >,<,= the given number\n"
             )
-
+# Getting the user input
 while True:
     print("Please choose your command between WHERE, POPULATION, WAGE, STATE, AREA, RANK, BIG, NUMBER,HELP: ")
     user_input = input().strip()
