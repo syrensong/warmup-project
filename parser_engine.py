@@ -203,8 +203,10 @@ if __name__ == '__main__':
             quantity = int(parts[2])
             if parts[3] in {"detail"}:
                 detail = parts[3]
+            doQuery(column, city, operator, quantity, detail)
         else:
             city = parts[1]
             if len(parts) > 2 and parts[2] in {"detail"}:
                 detail = parts[2]
-        doQuery(column, city, operator, quantity, detail)
+            doQuery(column, city, operator, quantity, detail)
+        
