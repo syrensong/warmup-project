@@ -2,6 +2,8 @@ import pyparsing as pp
 import firebase_engine as fe
 from pyparsing import Word, Literal, Combine, Group, Optional
 import shlex
+import warnings
+warnings.filterwarnings("ignore", message="Detected filter using positional arguments.")
 
 query_keywords = pp.oneOf("POPULATION WHERE WAGE STATE AREA RANK BIG")
 operators = pp.oneOf("< > == <= >=")
@@ -106,7 +108,7 @@ def doNumPopulationQuery(operand, quantity):
             print(f"{data['name']}")
     else:
         print(f"Cities not found")
-
+#def comparisonQuery(keyword,or_function, operand2):
 #Returns the cities whose wage is <=> the given quantity
 def doNumWageQuery(operand, quantity):
     city_list = fe.get_city_by_wage(operand, quantity)
