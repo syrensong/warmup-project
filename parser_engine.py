@@ -1,12 +1,7 @@
 import pyparsing as pp
-from firebase_admin import db
 import firebase_engine as fe
 from pyparsing import Word, Literal, Combine, Group, Optional
-from lark import Lark, Transformer
 import shlex
-
-
-
 
 query_keywords = pp.oneOf("POPULATION WHERE WAGE STATE AREA RANK BIG")
 operators = pp.oneOf("< > <= =>")
@@ -16,14 +11,6 @@ or_function = pp.Literal("OR")
 help_function = pp.Literal("HELP")
 
 expression = query_keywords + operators  + query_keywords
-print (expression)
-
-
-
-def main():
-    print("$$")
-    print(fe.get_city_by_name("New York"))
-    getHelp()
 
 def doQuery (column, city="none", operand="none", quantity=0):
     if column == "HELP":
@@ -58,7 +45,7 @@ def doQuery (column, city="none", operand="none", quantity=0):
     
     print("Invalid Query Message")
 
-#Works
+#Returns the population of the given city
 def doCityPopulationQuery(city):
     city_data = fe.getCityPopulation(city)
     
@@ -67,7 +54,7 @@ def doCityPopulationQuery(city):
     else:
         print(f"City '{city}' not found")
 
-#Works
+#Returns the state of the given city
 def doCityWhereQuery(city):
     city_data = fe.getStateByCity(city)
     
@@ -76,7 +63,7 @@ def doCityWhereQuery(city):
     else:
         print(f"City '{city}' not found")
 
-#Works
+#Returns all the cities in the given state
 def doCityStateQuery(state):
     city_list = fe.get_city_by_state(state)
 
@@ -87,7 +74,7 @@ def doCityStateQuery(state):
     else:
         print(f"State '{state}' not found")
 
-#Works
+#Returns the area of the given city
 def doCityAreaQuery(city):
     city_list = fe.getCityArea(city)
     if city_list:
@@ -95,7 +82,7 @@ def doCityAreaQuery(city):
     else:
         print(f"Area of '{city}' not found")
 
-#Works
+#Returns the rank of a given city
 def doCityRankQuery(city):
     city_list = fe.getCityRank(city)
     if city_list:
@@ -103,7 +90,7 @@ def doCityRankQuery(city):
     else:
         print(f"Rank of {city} is not found")
 
-#Works
+#Returns whether or not a city is considered a big city
 def doCityBigQuery(city):
     city_list = fe.getCityBig(city)
     if "big city" in city_list:
@@ -111,7 +98,7 @@ def doCityBigQuery(city):
     else:
         print(f"'{city}' is not a big city")
 
-#Works
+#Returns the cities whose population is <=> the given quantity
 def doNumPopulationQuery(operand, quantity):
     #return city
     city_data = fe.get_city_by_population(operand, quantity)
@@ -121,7 +108,7 @@ def doNumPopulationQuery(operand, quantity):
     else:
         print(f"Cities not found")
 
-#Doesn't work, always returns none
+#Returns the cities whose wage is <=> the given quantity
 def doNumWageQuery(operand, quantity):
     city_data = fe.get_city_by_wage(operand, quantity)
     if city_data:
@@ -130,9 +117,8 @@ def doNumWageQuery(operand, quantity):
     else:
         print(f"Cities not found")
 
-#Works
+#Returns the cities whose area is <=> the given quantity
 def doNumAreaQuery(operand, quantity):
-    #return city
     city_data = fe.get_city_by_area(operand, quantity)
     if city_data:
         for data in city_data:
@@ -140,7 +126,7 @@ def doNumAreaQuery(operand, quantity):
     else:
         print(f"Cities not found")
 
-#Works
+#Returns the cities whose rank is <=> the given quantity
 def doNumRankQuery(operand, quantity):
     city_data = fe.get_city_by_rank(operand, quantity)
     if city_data:
@@ -149,7 +135,7 @@ def doNumRankQuery(operand, quantity):
     else:
         print(f"Cities not found")
 
-#Works
+#Prints the options for possible queries
 def getHelp():
     print("City Commands\n"
             "\tWHERE “City”: returns the state the chosen city is in\n"
@@ -159,24 +145,29 @@ def getHelp():
             "\tRANK “City”: returns the rank of the chosen city\n"
             "\tBIG “City”: returns if the chosen city is big\n"
         "Number Commands: <, <=, =, >=, >\n"
-            "\tPOPULATION <=> #: returns cities with a population >,<,= the given number\n"
-            "\tWAGE <=> #: returns cities with a living wage >,<,= the given number\n"
-            "\tAREA <=> #: returns cities with an area >,<,= the given number\n"
-            "\tRANK <=> #: returns cities with a rank >,<,= the given number\n"
+            "\tPOPULATION <=> #: returns cities with a population <=> the given number\n"
+            "\tWAGE <=> #: returns cities with a living wage <=> the given number\n"
+            "\tAREA <=> #: returns cities with an area <=> the given number\n"
+            "\tRANK <=> #: returns cities with a rank <=> the given number\n"
+        "Exit: ends the program"
             )
 
-while True:
-    print("Please choose your command between WHERE, POPULATION, STATE, AREA, RANK, BIG, NUMBER,HELP: ")
-    user_input = input().strip()
-    parts = shlex.split(user_input)
-    print(parts)
-    column = parts[0].upper()
-    city = "none"
-    operator = "none"
-    quantity = 0
-    if len(parts) >= 3 and parts[1] in {"<", ">", "<=", ">=", "="}:
-        operator = parts[1]
-        quantity = int(parts[2])
-    elif len(parts) >= 2:
-        city = parts[1]
-    doQuery(column, city, operator, quantity)
+if __name__ == '__main__':
+    run = True
+    while run:
+        print("$$")
+        user_input = input().strip()
+        parts = shlex.split(user_input)
+        print(parts)
+        column = parts[0].upper()
+        if column == "EXIT":
+            run = False
+        city = "none"
+        operator = "none"
+        quantity = 0
+        if parts[1] in {"<", ">", "<=", ">=", "="}:
+            operator = parts[1]
+            quantity = int(parts[2])
+        else:
+            city = parts[1]
+        doQuery(column, city, operator, quantity)
