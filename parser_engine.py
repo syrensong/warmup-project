@@ -263,7 +263,9 @@ def getHelp():
             "\tWAGE <=> #: returns cities with a living wage <=> the given number\n"
             "\tAREA <=> #: returns cities with an area <=> the given number\n"
             "\tRANK <=> #: returns cities with a rank <=> the given number\n"
-        "Detail: added to the end of a number query to return a table of the returned cites"
+        "Query Addons\n"
+            "\tDetail: added to the end of a number query to return a table of the returned cites\n"
+            "\tAnd/Or: You can combine number queries using and/or between the two queries\n"
         "Exit: ends the program"
             )
 
